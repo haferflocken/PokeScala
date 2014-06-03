@@ -5,11 +5,8 @@ import java.time.LocalDateTime
 class Type(
     val name : String,
     val id : Int,
-    val ineffective : Vector[Int],
-    val noEffect : Vector[Int],
-    val superEffective : Vector[Int],
-    val resists : Vector[Int],
-    val weakTo : Vector[Int],
+    val offensiveMults : Map[Int, Double],
+    val defensiveMults : Map[Int, Double],
     val resourceURI : String,
     val created : LocalDateTime,
     val modified : LocalDateTime) extends Model[Type] {
