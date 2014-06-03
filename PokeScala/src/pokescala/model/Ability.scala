@@ -11,6 +11,7 @@ class Ability(
     val modified : LocalDateTime) extends Model[Ability] {
   
   val registry = AbilityRegistry;
+  registry.register(this);
 
 }
 
