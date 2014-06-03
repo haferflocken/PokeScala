@@ -10,6 +10,10 @@ abstract class Model[M <: Model[M]] {
   val created : LocalDateTime;
   val modified : LocalDateTime;
   val registry : ModelRegistry[M];
+  
+  override def hashCode = id.hashCode;
+  
+  override def equals(other : Any) = hashCode == other.hashCode;
 
 }
 

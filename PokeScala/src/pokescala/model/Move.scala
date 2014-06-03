@@ -18,8 +18,12 @@ class Move(
   
 }
 
-object MoveCategory {
-  
+object Move {
+  object Category {
+    val physical = "physical";
+    val special = "special";
+    val other = "other";
+  }
 }
 
 object MoveRegistry extends ModelRegistry[Move] {

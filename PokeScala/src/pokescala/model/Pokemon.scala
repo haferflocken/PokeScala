@@ -7,7 +7,7 @@ class Pokemon(
     val id : Int,
     val abilities : Vector[Int],
     val eggGroups : Vector[Int],
-    val evolutions : Vector[Evolution],
+    val evolutions : Vector[Pokemon.Evolution],
     val pokedexEntries : Vector[Int],
     val moves : Vector[Int],
     val types : Vector[Int],
@@ -36,15 +36,24 @@ class Pokemon(
 
 }
 
-class Evolution(
-    val level : Int,
-    val method : String,
-    val to : Int) {
-
-}
-
-object EvolutionMethod {
+object Pokemon {
   
+  class Evolution(val method : Evolution.Method, val to : Int) {}
+  
+  object Evolution {
+    abstract class Method(val process : String, val detail : String) {
+      override def toString = process + " - " + detail;
+    }
+    
+    object Method {
+      class LevelUp(val level : Int) extends Method("level up", String valueOf level);
+      class Stone(val stone : String) extends Method("stone", stone);
+      class Happiness extends Method("happiness", "");
+      class Mega(override val detail : String) extends Method("mega", detail);
+      class Other(override val detail : String) extends Method("other", detail);
+    }
+  }
+
 }
 
 object PokemonRegistry extends ModelRegistry[Pokemon] {
