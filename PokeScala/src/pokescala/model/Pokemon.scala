@@ -13,13 +13,7 @@ class Pokemon(
     val types : Vector[Int],
     val catchRate : Int,
     val species : String,
-    val hp : Int,
-    val attack : Int,
-    val defense : Int,
-    val specialAttack : Int,
-    val specialDefense : Int,
-    val speed : Int,
-    val statTotal : Int,
+    val stats : Pokemon.Stats,
     val eggCycles : Int,
     val evYield : String,
     val exp : Int,
@@ -52,6 +46,17 @@ object Pokemon {
       class Mega(override val detail : String) extends Method("mega", detail);
       class Other(override val detail : String) extends Method("other", detail);
     }
+  }
+  
+  class Stats(
+      val hp : Int,
+      val attack : Int,
+      val defense : Int,
+      val specialAttack : Int,
+      val specialDefense : Int,
+      val speed : Int) {
+    
+    val total = hp + attack + defense + specialAttack + specialDefense + speed;
   }
 
 }
