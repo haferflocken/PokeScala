@@ -20,6 +20,15 @@ class Move(
 
 object Move {
   object Category {
+    
+    def apply(raw : String) : String = {
+      if (raw equals physical)
+        return physical;
+      if (raw equals special)
+        return special;
+      return other;
+    }
+    
     val physical = "physical";
     val special = "special";
     val other = "other";

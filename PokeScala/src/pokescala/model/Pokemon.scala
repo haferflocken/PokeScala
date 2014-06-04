@@ -4,24 +4,27 @@ import java.time.LocalDateTime
 
 class Pokemon(
     val name : String,
-    val id : Int,
-    val abilities : Vector[Int],
-    val eggGroups : Vector[Int],
+    val abilities : Vector[String],
+    val eggGroups : Vector[String],
     val evolutions : Vector[Pokemon.Evolution],
-    val pokedexEntries : Vector[Int],
-    val moves : Vector[Int],
-    val types : Vector[Int],
+    val pokedexEntries : Vector[String],
+    val levelUpMoves : Vector[(String, Int)],
+    val eggMoves : Vector[String],
+    val machineMoves : Vector[String],
+    val tutorMoves : Vector[String],
+    val types : Vector[String],
     val catchRate : Int,
     val species : String,
     val stats : Pokemon.Stats,
     val eggCycles : Int,
     val evYield : String,
     val exp : Int,
-    val growthRate : Int,
-    val height : Double,
-    val weight : Double,
-    val happiness : Double,
+    val growthRate : String,
+    val height : String,
+    val weight : String,
+    val happiness : Int,
     val maleFemaleRatio : String,
+    val id : Int,
     val resourceURI : String,
     val created : LocalDateTime,
     val modified : LocalDateTime) extends Model[Pokemon] {
@@ -32,7 +35,7 @@ class Pokemon(
 
 object Pokemon {
   
-  class Evolution(val method : Evolution.Method, val to : Int) {}
+  class Evolution(val method : Evolution.Method, val to : String) {}
   
   object Evolution {
     abstract class Method(val process : String, val detail : String) {

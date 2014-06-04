@@ -19,10 +19,16 @@ abstract class Model[M <: Model[M]] {
 
 abstract class ModelRegistry[M <: Model[M]] {
   
-  protected val registry = new mutable.HashMap[Int, M];
+  protected val byId = new mutable.HashMap[Int, M];
+  protected val byResourceURI = new mutable.HashMap[String, M];
   
-  def apply(id : Int) : M = registry(id);
+  def apply(id : Int) : M = byId(id);
   
-  def register(instance : M) = registry(instance.id) = instance;
+  def apply(uri : String) : M = byResourceURI(uri);
+  
+  def register(instance : M) : Unit = {
+    byId(instance.id) = instance;
+    byResourceURI(instance.resourceURI) = instance;
+  }
   
 }

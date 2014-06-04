@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 class Sprite(
     val name : String,
-    val pokemon : Int,
+    val pokemon : String,
     val image : String,
     val id : Int,
     val resourceURI : String,

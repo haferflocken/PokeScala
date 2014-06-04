@@ -5,8 +5,8 @@ import java.time.LocalDateTime
 class PokedexEntry(
     val name : String,
     val description : String,
-    val games : Vector[Int],
-    val pokemon : Int,
+    val games : Vector[String],
+    val pokemon : String,
     val id : Int,
     val resourceURI : String,
     val created : LocalDateTime,

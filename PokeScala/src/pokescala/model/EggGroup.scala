@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 class EggGroup(
     val name : String,
-    val pokemon : Vector[Int],
+    val pokemon : Vector[String],
     val id : Int,
     val resourceURI : String,
     val created : LocalDateTime,

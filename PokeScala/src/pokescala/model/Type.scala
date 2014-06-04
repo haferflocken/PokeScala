@@ -4,9 +4,8 @@ import java.time.LocalDateTime
 
 class Type(
     val name : String,
+    val offensiveMults : Map[String, Double],
     val id : Int,
-    val offensiveMults : Map[Int, Double],
-    val defensiveMults : Map[Int, Double],
     val resourceURI : String,
     val created : LocalDateTime,
     val modified : LocalDateTime) extends Model[Type] {
