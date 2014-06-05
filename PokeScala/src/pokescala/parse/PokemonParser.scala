@@ -5,10 +5,11 @@ import pokescala.model.Implicits._
 import scala.util.parsing.json.JSONObject
 import scala.util.parsing.json.JSONArray
 import scala.collection.mutable
+import scala.util.Try
 
 object PokemonParser extends Parser[Pokemon] {
 
-  def parse(implicit raw : Map[String, Any]) : Pokemon = {
+  def parse(implicit raw : Map[String, Any]) : Try[Pokemon] = Try {
     val (id, resourceURI, created, modified) = extractModelInfo("national_id");
     val name = extract[String]("name");
     val abilities = extractResourceURIs(raw("abilities"));
@@ -24,8 +25,13 @@ object PokemonParser extends Parser[Pokemon] {
       val method = extract[String]("method")(obj);
       val uri = extract[String]("resource_uri")(obj);
       if (method equals "level_up") {
-        val level = extract[Double]("level")(obj).toInt;
-        evolutionsBuff += new Evolution(new LevelUp(level), uri);
+        if (raw contains "level") {
+          val level = extract[Double]("level")(obj).toInt;
+          evolutionsBuff += new Evolution(new LevelUp(level), uri);
+        }
+        else {
+          evolutionsBuff += new Evolution(new LevelUp(-1), uri);
+        }
       }
       else if (method equals "stone") {
         evolutionsBuff += new Evolution(new Stone(""), uri);
@@ -93,7 +99,7 @@ object PokemonParser extends Parser[Pokemon] {
     val happiness = extract[Double]("happiness").toInt;
     val maleFemaleRatio = extract[String]("male_female_ratio");
     
-    return new Pokemon(
+    new Pokemon(
         name, abilities, eggGroups, evolutions, pokedexEntries, levelUpMoves, eggMoves,
         machineMoves, tutorMoves, types, catchRate, species, stats, eggCycles, evYield,
         exp, growthRate, height, weight, happiness, maleFemaleRatio,

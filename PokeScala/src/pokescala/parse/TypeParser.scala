@@ -5,10 +5,11 @@ import pokescala.model.Implicits._
 import scala.util.parsing.json.JSONObject
 import scala.util.parsing.json.JSONArray
 import scala.collection.mutable
+import scala.util.Try
 
 object TypeParser extends Parser[Type] {
   
-  def parse(implicit raw : Map[String, Any]) : Type = {
+  def parse(implicit raw : Map[String, Any]) : Try[Type] = Try {
     val (id, resourceURI, created, modified) = extractModelInfo();
     val name = extract[String]("name");
     
@@ -23,7 +24,7 @@ object TypeParser extends Parser[Type] {
     
     val offensiveMults = offensiveMultsBuff.toMap;
     
-    return new Type(name, offensiveMults, id, resourceURI, created, modified);
+    new Type(name, offensiveMults, id, resourceURI, created, modified);
   };
 
 }

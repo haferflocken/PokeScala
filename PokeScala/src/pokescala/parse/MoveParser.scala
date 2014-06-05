@@ -5,10 +5,11 @@ import pokescala.model.Implicits._
 import scala.util.parsing.json.JSONObject
 import scala.util.parsing.json.JSONArray
 import scala.collection.mutable
+import scala.util.Try
 
 object MoveParser extends Parser[Move] {
 
-  def parse(implicit raw : Map[String, Any]) : Move = {
+  def parse(implicit raw : Map[String, Any]) : Try[Move] = Try {
     val (id, resourceURI, created, modified) = extractModelInfo();
     val name = extract[String]("name");
     val description = extract[String]("description");
@@ -17,7 +18,7 @@ object MoveParser extends Parser[Move] {
     val category = Move.Category(extract[String]("category"));
     val pp = extract[Double]("pp").toInt;
     
-    return new Move(name, description, power, accuracy, category, pp, id, resourceURI, created, modified);
+    new Move(name, description, power, accuracy, category, pp, id, resourceURI, created, modified);
   };
   
 }

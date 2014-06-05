@@ -37,4 +37,8 @@ abstract class ModelRegistry[M <: Model[M]] {
     byResourceURI(instance.resourceURI) = instance;
   }
   
+  def size = byId.size;
+  
+  override def toString = byId.values.mkString("[ ", ", ", " ]");
+  
 }

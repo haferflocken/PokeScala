@@ -4,22 +4,30 @@ import scala.util.parsing.json.JSONObject
 import pokescala.model.Model
 import java.time.LocalDateTime
 import scala.util.parsing.json.JSON
+import scala.util.Try
+import scala.util.Failure
 
 abstract class Parser[T <: Model[T]] {
   
-  def parse(implicit raw : Map[String, Any]) : T;
+  def parse(implicit raw : Map[String, Any]) : Try[T];
   
-  def parse(raw : JSONObject) : T = parse(JSONConverter.objToMap(raw));
+  def parse(raw : JSONObject) : Try[T] = parse(JSONConverter.objToMap(raw));
   
-  def parse(raw : String) : T = parse(JSON.parseRaw(raw).get.asInstanceOf[JSONObject]);
+  def parse(raw : String) : Try[T] = {
+    val jsonObject = Try {
+      val jsonOption = JSON.parseRaw(raw);
+      jsonOption.get.asInstanceOf[JSONObject];
+    };
+    if (jsonObject.isSuccess)
+      return parse(jsonObject.get);
+    return Failure(jsonObject.failed.get);
+  };
   
   protected implicit def asVector(a : Any) : Vector[Any] = {
-    
     if (a.isInstanceOf[Vector[Any]])
       return a.asInstanceOf[Vector[Any]];
-    
     return Vector(a);
-  }
+  };
   
   protected def extract[T](key : String)(implicit raw : Map[String, Any]) : T = raw(key).asInstanceOf[T];
   

@@ -6,16 +6,17 @@ import scala.util.parsing.json.JSONObject
 import scala.util.parsing.json.JSONArray
 import scala.collection.mutable
 import java.time.Year
+import scala.util.Try
 
 object GameParser extends Parser[Game] {
   
-  def parse(implicit raw : Map[String, Any]) : Game = {
+  def parse(implicit raw : Map[String, Any]) : Try[Game] = Try {
     val (id, resourceURI, created, modified) = extractModelInfo();
     val name = extract[String]("name");
     val generation = extract[Double]("generation").toInt;
     val releaseYear = extract[Double]("release_year").toInt;
     
-    return new Game(name, generation, releaseYear, id, resourceURI, created, modified);
+    new Game(name, generation, releaseYear, id, resourceURI, created, modified);
   };
 
 }
