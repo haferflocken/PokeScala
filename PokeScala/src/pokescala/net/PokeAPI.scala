@@ -16,20 +16,11 @@ import java.io.FileWriter
 object PokeAPI {
   
   private def getRaw(uri : String) : Try[String] = Try {
-    val stream = new URL("http://pokeapi.co/" + uri).openStream;
-    val in = new BufferedReader(new InputStreamReader(stream));
-      
-    val buff = new StringBuilder;
-    var line : String = in.readLine;
-    while (line != null) {
-      buff.append(line);
-      line = in.readLine;
-    } 
-    in.close;
-    
-    val out = buff.toString.trim;
-    Cacher.writeRaw(out, uri);
-    out;
+    val source = io.Source.fromURL("http://pokeapi.co/" + uri);
+    val contents = source.getLines.mkString("\n");
+    source.close;
+    Cacher.writeRaw(contents, uri);
+    contents;
   };
   
   private def getModel[M <: Model[M]](resourceURI : String, registry : ModelRegistry[M], parser : Parser[M]) : Option[M] = {
