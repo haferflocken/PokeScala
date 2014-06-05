@@ -9,7 +9,7 @@ import scala.collection.mutable
 object TypeParser extends Parser[Type] {
   
   def parse(implicit raw : Map[String, Any]) : Type = {
-    val (id, resourceURI, created, modified) = extractModelInfo(raw);
+    val (id, resourceURI, created, modified) = extractModelInfo();
     val name = extract[String]("name");
     
     val strongAgainst = extractResourceURIs(raw("super_effective"));

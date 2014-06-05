@@ -9,11 +9,11 @@ import scala.collection.mutable
 object PokedexEntryParser extends Parser[PokedexEntry] {
 
   def parse(implicit raw : Map[String, Any]) : PokedexEntry = {
-    val (id, resourceURI, created, modified) = extractModelInfo(raw);
-    val name = raw("name").asInstanceOf[String];
-    val description = raw("description").asInstanceOf[String];
+    val (id, resourceURI, created, modified) = extractModelInfo();
+    val name = extract[String]("name");
+    val description = extract[String]("description");
     val games = extractResourceURIs(raw("games"));
-    val pokemon = raw("pokemon").asInstanceOf[Map[String, Any]]("resource_uri").asInstanceOf[String];
+    val pokemon = extract[String]("resource_uri")(extract[Map[String, Any]]("pokemon"))
     
     return new PokedexEntry(name, description, games, pokemon, id, resourceURI, created, modified);
   };

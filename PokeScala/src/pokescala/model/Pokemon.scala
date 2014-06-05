@@ -30,6 +30,9 @@ class Pokemon(
     val modified : LocalDateTime) extends Model[Pokemon] {
   
   val registry = PokemonRegistry;
+  registry.register(this);
+  
+  override def toString = s"$name; " + super.toString;
 
 }
 

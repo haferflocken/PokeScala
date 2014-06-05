@@ -11,6 +11,9 @@ class EggGroup(
     val modified : LocalDateTime) extends Model[EggGroup] {
   
   val registry = EggGroupRegistry;
+  registry.register(this);
+  
+  override def toString = s"$name; $pokemon; " + super.toString;
 
 }
 

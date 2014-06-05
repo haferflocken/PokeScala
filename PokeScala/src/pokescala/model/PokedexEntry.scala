@@ -13,6 +13,9 @@ class PokedexEntry(
     val modified : LocalDateTime) extends Model[PokedexEntry] {
   
   val registry = PokedexEntryRegistry;
+  registry.register(this);
+  
+  override def toString = s"$name; $description; $games; $pokemon; " + super.toString;
 
 }
 

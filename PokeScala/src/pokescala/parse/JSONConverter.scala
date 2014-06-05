@@ -4,7 +4,7 @@ import scala.util.parsing.json.JSONObject
 import scala.util.parsing.json.JSONArray
 import scala.collection.mutable
 
-object JSONTreeConverter {
+object JSONConverter {
   
   def objToMap(obj : JSONObject) : Map[String, Any] = {
     if (obj == null || obj.obj == null)
@@ -32,7 +32,7 @@ object JSONTreeConverter {
     return buff.toVector;
   };
   
-  def process(x : Any) : Any = {
+  private def process(x : Any) : Any = {
     if (x.isInstanceOf[JSONObject])
         return objToMap(x.asInstanceOf[JSONObject]);
     if (x.isInstanceOf[JSONArray])

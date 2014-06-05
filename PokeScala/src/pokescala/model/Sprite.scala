@@ -12,6 +12,9 @@ class Sprite(
     val modified : LocalDateTime) extends Model[Sprite] {
   
   val registry = SpriteRegistry;
+  registry.register(this);
+  
+  override def toString = s"$name; $pokemon; $image; " + super.toString;
 
 }
 

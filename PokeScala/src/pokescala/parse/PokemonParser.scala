@@ -9,7 +9,7 @@ import scala.collection.mutable
 object PokemonParser extends Parser[Pokemon] {
 
   def parse(implicit raw : Map[String, Any]) : Pokemon = {
-    val (id, resourceURI, created, modified) = extractModelInfo(raw, "national_id");
+    val (id, resourceURI, created, modified) = extractModelInfo("national_id");
     val name = extract[String]("name");
     val abilities = extractResourceURIs(raw("abilities"));
     val eggGroups = extractResourceURIs(raw("egg_groups"));
@@ -24,7 +24,7 @@ object PokemonParser extends Parser[Pokemon] {
       val method = extract[String]("method")(obj);
       val uri = extract[String]("resource_uri")(obj);
       if (method equals "level_up") {
-        val level = extract[Int]("level")(obj);
+        val level = extract[Double]("level")(obj).toInt;
         evolutionsBuff += new Evolution(new LevelUp(level), uri);
       }
       else if (method equals "stone") {
@@ -56,7 +56,7 @@ object PokemonParser extends Parser[Pokemon] {
       val learnType = extract[String]("learn_type")(obj);
       val uri = extract[String]("resource_uri")(obj);
       if (learnType equals "level up") {
-        val level = extract[Int]("level")(obj);
+        val level = extract[Double]("level")(obj).toInt;
         levelUpMovesBuff += ((uri, level));
       }
       else if (learnType equals "egg move")
@@ -73,24 +73,24 @@ object PokemonParser extends Parser[Pokemon] {
     val tutorMoves = tutorMovesBuff.toVector;
     
     val types = extractResourceURIs(raw("types"));
-    val catchRate = extract[Int]("catch_rate");
+    val catchRate = extract[Double]("catch_rate").toInt;
     val species = extract[String]("species");
     
-    val hp = extract[Int]("hp");
-    val attack = extract[Int]("attack");
-    val defense = extract[Int]("defense");
-    val specialAttack = extract[Int]("sp_atk");
-    val specialDefense = extract[Int]("sp_def");
-    val speed = extract[Int]("speed");
+    val hp = extract[Double]("hp").toInt;
+    val attack = extract[Double]("attack").toInt;
+    val defense = extract[Double]("defense").toInt;
+    val specialAttack = extract[Double]("sp_atk").toInt;
+    val specialDefense = extract[Double]("sp_def").toInt;
+    val speed = extract[Double]("speed").toInt;
     val stats = new Pokemon.Stats(hp, attack, defense, specialAttack, specialDefense, speed);
     
-    val eggCycles = extract[Int]("egg_cycles");
+    val eggCycles = extract[Double]("egg_cycles").toInt;
     val evYield = extract[String]("ev_yield");
-    val exp = extract[Int]("exp");
-    val growthRate = extract[String]("growthRate");
+    val exp = extract[Double]("exp").toInt;
+    val growthRate = extract[String]("growth_rate");
     val height = extract[String]("height");
     val weight = extract[String]("weight");
-    val happiness = extract[Int]("happiness");
+    val happiness = extract[Double]("happiness").toInt;
     val maleFemaleRatio = extract[String]("male_female_ratio");
     
     return new Pokemon(

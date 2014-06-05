@@ -14,6 +14,8 @@ abstract class Model[M <: Model[M]] {
   override def hashCode = id.hashCode;
   
   override def equals(other : Any) = hashCode == other.hashCode;
+  
+  override def toString = s"$id; $resourceURI; $created; $modified";
 
 }
 
@@ -25,6 +27,10 @@ abstract class ModelRegistry[M <: Model[M]] {
   def apply(id : Int) : M = byId(id);
   
   def apply(uri : String) : M = byResourceURI(uri);
+  
+  def contains(id : Int) : Boolean = byId.contains(id);
+  
+  def contains(uri : String) : Boolean = byResourceURI.contains(uri);
   
   def register(instance : M) : Unit = {
     byId(instance.id) = instance;

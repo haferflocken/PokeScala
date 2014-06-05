@@ -9,8 +9,8 @@ import scala.collection.mutable
 object EggGroupParser extends Parser[EggGroup] {
   
   def parse(implicit raw : Map[String, Any]) : EggGroup = {
-    val (id, resourceURI, created, modified) = extractModelInfo(raw);
-    val name = raw("name").asInstanceOf[String];
+    val (id, resourceURI, created, modified) = extractModelInfo();
+    val name = extract[String]("name");
     val pokemon = extractResourceURIs(raw("pokemon"));
     
     return new EggGroup(name, pokemon, id, resourceURI, created, modified);

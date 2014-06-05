@@ -15,6 +15,9 @@ class Move(
     val modified : LocalDateTime) extends Model[Move] {
 
   val registry = MoveRegistry;
+  registry.register(this);
+  
+  override def toString = s"$name; $description; $power; $accuracy; $category; $pp; " + super.toString;
   
 }
 

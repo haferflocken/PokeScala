@@ -9,13 +9,13 @@ import scala.collection.mutable
 object MoveParser extends Parser[Move] {
 
   def parse(implicit raw : Map[String, Any]) : Move = {
-    val (id, resourceURI, created, modified) = extractModelInfo(raw);
-    val name = raw("name").asInstanceOf[String];
-    val description = raw("description").asInstanceOf[String];
-    val power = raw("power").asInstanceOf[Int];
-    val accuracy = raw("accuracy").asInstanceOf[Int];
-    val category = Move.Category(raw("category").asInstanceOf[String]);
-    val pp = raw("pp").asInstanceOf[Int];
+    val (id, resourceURI, created, modified) = extractModelInfo();
+    val name = extract[String]("name");
+    val description = extract[String]("description");
+    val power = extract[Double]("power").toInt;
+    val accuracy = extract[Double]("accuracy").toInt;
+    val category = Move.Category(extract[String]("category"));
+    val pp = extract[Double]("pp").toInt;
     
     return new Move(name, description, power, accuracy, category, pp, id, resourceURI, created, modified);
   };

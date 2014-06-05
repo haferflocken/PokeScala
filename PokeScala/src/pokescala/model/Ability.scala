@@ -12,6 +12,8 @@ class Ability(
   
   val registry = AbilityRegistry;
   registry.register(this);
+  
+  override def toString = s"$name; $description; " + super.toString;
 
 }
 

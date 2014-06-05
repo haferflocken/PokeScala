@@ -11,6 +11,9 @@ class Type(
     val modified : LocalDateTime) extends Model[Type] {
   
   val registry = TypeRegistry;
+  registry.register(this);
+  
+  override def toString = s"$name; $offensiveMults; " + super.toString;
 
 }
 
