@@ -63,6 +63,8 @@ object PokeAPI {
   
   def getPokemon(id : Int) : Option[Pokemon] = getPokemon(s"api/v1/pokemon/$id/");
   
+  def getPokemonByName(name : String) : Option[Pokemon] = getPokemon(s"api/v1/pokemon/$name/");
+  
   def getPokemon(resourceURI : String) : Option[Pokemon] = getModel(resourceURI, PokemonRegistry, PokemonParser);
   
   def getSprite(id : Int) : Option[Sprite] = getSprite(s"api/v1/sprite/$id/");
