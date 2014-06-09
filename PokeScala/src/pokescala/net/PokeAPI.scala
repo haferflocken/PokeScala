@@ -15,12 +15,26 @@ import java.io.FileWriter
 
 object PokeAPI {
   
-  private def getRaw(uri : String) : Try[String] = Try {
-    val source = io.Source.fromURL("http://pokeapi.co/" + uri);
+  var caching = true;
+  
+  private def getRawFromWeb(uri : String) : Try[String] = Try {
+    val source = {
+      if (uri startsWith "/") io.Source.fromURL("http://pokeapi.co" + uri);
+      else io.Source.fromURL("http://pokeapi.co/" + uri);
+    }
     val contents = source.getLines.mkString("\n");
     source.close;
-    Cacher.writeRaw(contents, uri);
     contents;
+  };
+  
+  private def getRaw(uri : String) : Try[String] = {
+    if (caching) {
+      val cached = Cacher.readFrom(uri);
+      if (cached.isSuccess)
+        return cached;
+      println(s"Failed to load $uri from cache. It will be retrieved from the web.");
+    }
+    return getRawFromWeb(uri);
   };
   
   private def getModel[M <: Model[M]](resourceURI : String, registry : ModelRegistry[M], parser : Parser[M]) : Option[M] = {
@@ -29,13 +43,13 @@ object PokeAPI {
     
     val raw = getRaw(resourceURI);
     if (raw.isFailure) {
-      println(s"Failed to get raw for $resourceURI: " + raw.failed.get);
+      println(s"Failed to get raw for $resourceURI: $raw");
       return None;
     }
     
     val parsed = parser.parse(raw.get);
     if (parsed.isFailure)
-      println(s"Failed to parse raw from $resourceURI");
+      println(s"Failed to parse raw from $resourceURI: $parsed");
     return parsed.toOption;
   };
   

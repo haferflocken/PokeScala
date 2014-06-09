@@ -15,7 +15,7 @@ object GetTest extends App {
     
     // Loop through their egg groups.
     for (uri <- pokemon.eggGroups)
-      PokeAPI.abilityByURI(uri);
+      PokeAPI.eggGroupByURI(uri);
     
     // Loop through their pokedex entries.
     for (uri <- pokemon.pokedexEntries)
