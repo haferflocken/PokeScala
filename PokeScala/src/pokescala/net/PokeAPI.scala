@@ -39,39 +39,39 @@ object PokeAPI {
     return parsed.toOption;
   };
   
-  def getAbility(id : Int) : Option[Ability] = getAbility(s"api/v1/ability/$id/");
+  def abilityById(id : Int) : Option[Ability] = abilityByURI(s"api/v1/ability/$id/");
   
-  def getAbility(resourceURI : String) : Option[Ability] = getModel(resourceURI, AbilityRegistry, AbilityParser);
+  def abilityByURI(resourceURI : String) : Option[Ability] = getModel(resourceURI, AbilityRegistry, AbilityParser);
   
-  def getEggGroup(id : Int) : Option[EggGroup] = getEggGroup(s"api/v1/egg/$id/");
+  def eggGroupById(id : Int) : Option[EggGroup] = eggGroupByURI(s"api/v1/egg/$id/");
   
-  def getEggGroup(resourceURI : String) : Option[EggGroup] = getModel(resourceURI, EggGroupRegistry, EggGroupParser);
+  def eggGroupByURI(resourceURI : String) : Option[EggGroup] = getModel(resourceURI, EggGroupRegistry, EggGroupParser);
   
-  def getGame(id : Int) : Option[Game] = getGame(s"api/v1/game/$id/");
+  def gameById(id : Int) : Option[Game] = gameByURI(s"api/v1/game/$id/");
   
-  def getGame(resourceURI : String) : Option[Game] = getModel(resourceURI, GameRegistry, GameParser);
+  def gameByURI(resourceURI : String) : Option[Game] = getModel(resourceURI, GameRegistry, GameParser);
   
-  def getMove(id : Int) : Option[Move] = getMove(s"api/v1/move/$id/");
+  def moveById(id : Int) : Option[Move] = moveByURI(s"api/v1/move/$id/");
   
-  def getMove(resourceURI : String) : Option[Move] = getModel(resourceURI, MoveRegistry, MoveParser);
+  def moveByURI(resourceURI : String) : Option[Move] = getModel(resourceURI, MoveRegistry, MoveParser);
   
-  def getPokedex : Option[Pokedex] = getModel("api/v1/pokedex/1", PokedexRegistry, PokedexParser);
+  def pokedex : Option[Pokedex] = getModel("api/v1/pokedex/1", PokedexRegistry, PokedexParser);
   
-  def getPokedexEntry(id : Int) : Option[PokedexEntry] = getPokedexEntry(s"api/v1/description/$id/");
+  def pokedexEntryById(id : Int) : Option[PokedexEntry] = pokedexEntryByURI(s"api/v1/description/$id/");
   
-  def getPokedexEntry(resourceURI : String) : Option[PokedexEntry] = getModel(resourceURI, PokedexEntryRegistry, PokedexEntryParser);
+  def pokedexEntryByURI(resourceURI : String) : Option[PokedexEntry] = getModel(resourceURI, PokedexEntryRegistry, PokedexEntryParser);
   
-  def getPokemon(id : Int) : Option[Pokemon] = getPokemon(s"api/v1/pokemon/$id/");
+  def pokemonById(id : Int) : Option[Pokemon] = pokemonByURI(s"api/v1/pokemon/$id/");
   
-  def getPokemonByName(name : String) : Option[Pokemon] = getPokemon(s"api/v1/pokemon/$name/");
+  def pokemonByName(name : String) : Option[Pokemon] = pokemonByURI(s"api/v1/pokemon/$name/");
   
-  def getPokemon(resourceURI : String) : Option[Pokemon] = getModel(resourceURI, PokemonRegistry, PokemonParser);
+  def pokemonByURI(resourceURI : String) : Option[Pokemon] = getModel(resourceURI, PokemonRegistry, PokemonParser);
   
-  def getSprite(id : Int) : Option[Sprite] = getSprite(s"api/v1/sprite/$id/");
+  def spriteById(id : Int) : Option[Sprite] = spriteByURI(s"api/v1/sprite/$id/");
   
-  def getSprite(resourceURI : String) : Option[Sprite] = getModel(resourceURI, SpriteRegistry, SpriteParser);
+  def spriteByURI(resourceURI : String) : Option[Sprite] = getModel(resourceURI, SpriteRegistry, SpriteParser);
 
-  def getType(id : Int) : Option[Type] = getType(s"api/v1/type/$id/");
+  def typeById(id : Int) : Option[Type] = typeByURI(s"api/v1/type/$id/");
   
-  def getType(resourceURI : String) : Option[Type] = getModel(resourceURI, TypeRegistry, TypeParser);
+  def typeByURI(resourceURI : String) : Option[Type] = getModel(resourceURI, TypeRegistry, TypeParser);
 }
