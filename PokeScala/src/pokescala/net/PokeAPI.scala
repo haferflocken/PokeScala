@@ -74,4 +74,6 @@ object PokeAPI {
   def typeById(id : Int) : Option[Type] = typeByURI(s"api/v1/type/$id/");
   
   def typeByURI(resourceURI : String) : Option[Type] = getModel(resourceURI, TypeRegistry, TypeParser);
+  
+  def allTypes : Map[String, Type] = (for (i <- 1 to 18; t <- typeById(i)) yield (t.name, t)).toMap;
 }
