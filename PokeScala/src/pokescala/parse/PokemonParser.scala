@@ -25,7 +25,7 @@ object PokemonParser extends Parser[Pokemon] {
       val method = extract[String]("method")(obj);
       val uri = extract[String]("resource_uri")(obj);
       if (method equals "level_up") {
-        if (raw contains "level") {
+        if (obj contains "level") {
           val level = extract[Double]("level")(obj).toInt;
           evolutionsBuff += new Evolution(new LevelUp(level), uri);
         }
@@ -39,11 +39,12 @@ object PokemonParser extends Parser[Pokemon] {
       else if (method equals "happiness") {
         evolutionsBuff += new Evolution(new Happiness, uri);
       }
-      else if (method equals "mega") {
-        evolutionsBuff += new Evolution(new Mega(null), uri);
-      }
       else if (method equals "other") {
-        evolutionsBuff += new Evolution(new Other(null), uri);
+        val detail = Try { extract[String]("detail")(obj) };
+        if (detail.isSuccess)
+          evolutionsBuff += new Evolution(new Other(detail.get), uri);
+        else
+          evolutionsBuff += new Evolution(new Other(null), uri);
       }
     }
     

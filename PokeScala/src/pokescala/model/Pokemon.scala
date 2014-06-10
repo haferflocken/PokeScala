@@ -38,18 +38,19 @@ class Pokemon(
 
 object Pokemon {
   
-  class Evolution(val method : Evolution.Method, val to : String) {}
+  class Evolution(val method : Evolution.Method, val to : String) {
+    override def toString = s"$method -> $to";
+  }
   
   object Evolution {
     abstract class Method(val process : String, val detail : String) {
-      override def toString = process + " - " + detail;
+      override def toString = s"$process ($detail)";
     }
     
     object Method {
       class LevelUp(val level : Int) extends Method("level up", String valueOf level);
       class Stone(val stone : String) extends Method("stone", stone);
       class Happiness extends Method("happiness", "");
-      class Mega(override val detail : String) extends Method("mega", detail);
       class Other(override val detail : String) extends Method("other", detail);
     }
   }
