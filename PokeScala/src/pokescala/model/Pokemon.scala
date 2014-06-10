@@ -48,10 +48,9 @@ object Pokemon {
     }
     
     object Method {
-      class LevelUp(val level : Int) extends Method("level up", String valueOf level);
-      class Stone(val stone : String) extends Method("stone", stone);
-      class Happiness extends Method("happiness", "");
-      class Other(override val detail : String) extends Method("other", detail);
+      case class LevelUp(val level : Int) extends Method("level up", String valueOf level);
+      case class Stone(val stone : String) extends Method("stone", stone);
+      case class Other(override val detail : String) extends Method("other", detail);
     }
   }
   

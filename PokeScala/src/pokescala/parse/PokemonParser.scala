@@ -36,9 +36,6 @@ object PokemonParser extends Parser[Pokemon] {
       else if (method equals "stone") {
         evolutionsBuff += new Evolution(new Stone(""), uri);
       }
-      else if (method equals "happiness") {
-        evolutionsBuff += new Evolution(new Happiness, uri);
-      }
       else if (method equals "other") {
         val detail = Try { extract[String]("detail")(obj) };
         if (detail.isSuccess)
