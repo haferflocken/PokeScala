@@ -1,18 +1,19 @@
 package pokescala.model
 
 import java.time.LocalDateTime
+import scala.collection.mutable
 
 class Pokemon(
     val name : String,
-    val abilities : Vector[String],
-    val eggGroups : Vector[String],
+    val abilityURIs : Vector[String],
+    val eggGroupURIs : Vector[String],
     val evolutions : Vector[Pokemon.Evolution],
-    val pokedexEntries : Vector[String],
-    val levelUpMoves : Vector[(String, Int)],
-    val eggMoves : Vector[String],
-    val machineMoves : Vector[String],
-    val tutorMoves : Vector[String],
-    val types : Vector[String],
+    val pokedexEntryURIs : Vector[String],
+    val levelUpMoveURIs : Vector[(String, Int)],
+    val eggMoveURIs : Vector[String],
+    val machineMoveURIs : Vector[String],
+    val tutorMoveURIs : Vector[String],
+    val typeURIs : Vector[String],
     val catchRate : Int,
     val species : String,
     val stats : Pokemon.Stats,
@@ -31,6 +32,14 @@ class Pokemon(
   
   val registry = PokemonRegistry;
   registry.register(this);
+  
+  def loadAdjacent : Vector[Model[_]] = {
+    val buff = new mutable.ArrayBuffer[Model[_]];
+    
+    // TODO
+    
+    return buff.toVector;
+  };
   
   override def toString = s"$name; " + super.toString;
 

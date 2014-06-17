@@ -1,10 +1,11 @@
 package pokescala.model
 
 import java.time.LocalDateTime
+import pokescala.net.PokeAPI
 
 class EggGroup(
     val name : String,
-    val pokemon : Vector[String],
+    val pokemonURIs : Vector[String],
     val id : Int,
     val resourceURI : String,
     val created : LocalDateTime,
@@ -13,7 +14,9 @@ class EggGroup(
   val registry = EggGroupRegistry;
   registry.register(this);
   
-  override def toString = s"$name; $pokemon; " + super.toString;
+  def loadAdjacent = for (uri <- pokemonURIs; p <- PokeAPI.pokemonByURI(uri)) yield p;
+  
+  override def toString = s"$name; $pokemonURIs; " + super.toString;
 
 }
 

@@ -8,31 +8,31 @@ object GetTest extends App {
   val startTime = System.currentTimeMillis;
   
   // Loop through the pokemon in the pokedex, loading them.
-  for (pokedex <- PokeAPI.pokedex; uri <- pokedex.pokemon; pokemon <- PokeAPI.pokemonByURI(uri)) {
+  for (pokedex <- PokeAPI.pokedex; uri <- pokedex.pokemonURIs; pokemon <- PokeAPI.pokemonByURI(uri)) {
     // Loop through their abilities.
-    for (uri <- pokemon.abilities)
+    for (uri <- pokemon.abilityURIs)
       PokeAPI.abilityByURI(uri);
     
     // Loop through their egg groups.
-    for (uri <- pokemon.eggGroups)
+    for (uri <- pokemon.eggGroupURIs)
       PokeAPI.eggGroupByURI(uri);
     
     // Loop through their pokedex entries.
-    for (uri <- pokemon.pokedexEntries)
+    for (uri <- pokemon.pokedexEntryURIs)
       PokeAPI.pokedexEntryByURI(uri);
     
     // Loop through their moves.
-    for ((uri, level) <- pokemon.levelUpMoves)
+    for ((uri, level) <- pokemon.levelUpMoveURIs)
       PokeAPI.moveByURI(uri);
-    for (uri <- pokemon.eggMoves)
+    for (uri <- pokemon.eggMoveURIs)
       PokeAPI.moveByURI(uri);
-    for (uri <- pokemon.machineMoves)
+    for (uri <- pokemon.machineMoveURIs)
       PokeAPI.moveByURI(uri);
-    for (uri <- pokemon.tutorMoves)
+    for (uri <- pokemon.tutorMoveURIs)
       PokeAPI.moveByURI(uri);
     
     // Loop through their types.
-    for (uri <- pokemon.types)
+    for (uri <- pokemon.typeURIs)
       PokeAPI.typeByURI(uri);
     
     println("Loaded " + pokemon.name);

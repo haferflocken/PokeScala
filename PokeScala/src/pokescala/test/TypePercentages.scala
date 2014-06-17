@@ -7,8 +7,8 @@ object TypePercentages extends App {
   
   val types = new mutable.HashMap ++= PokeAPI.allTypes.map(t => (t._2, 0));
   
-  for (pokedex <- PokeAPI.pokedex; uri <- pokedex.pokemon; pokemon <- PokeAPI.pokemonByURI(uri)) {
-    for (uri <- pokemon.types; t <- PokeAPI.typeByURI(uri)) {
+  for (pokedex <- PokeAPI.pokedex; uri <- pokedex.pokemonURIs; pokemon <- PokeAPI.pokemonByURI(uri)) {
+    for (uri <- pokemon.typeURIs; t <- PokeAPI.typeByURI(uri)) {
       types.update(t, types(t) + 1);
     }
   }

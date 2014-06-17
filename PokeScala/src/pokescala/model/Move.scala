@@ -17,6 +17,8 @@ class Move(
   val registry = MoveRegistry;
   registry.register(this);
   
+  def loadAdjacent = Vector();
+  
   override def toString = s"$name; $description; $power; $accuracy; $category; $pp; " + super.toString;
   
 }

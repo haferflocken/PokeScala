@@ -1,10 +1,11 @@
 package pokescala.model
 
 import java.time.LocalDateTime
+import pokescala.net.PokeAPI
 
 class Pokedex(
     val name : String,
-    val pokemon : Vector[String],
+    val pokemonURIs : Vector[String],
     val resourceURI : String,
     val created : LocalDateTime,
     val modified : LocalDateTime) extends Model[Pokedex] {
@@ -13,7 +14,9 @@ class Pokedex(
   val registry = PokedexRegistry;
   registry.register(this);
   
-  override def toString = s"$name; $pokemon; " + super.toString;
+  def loadAdjacent = for (uri <- pokemonURIs; p <- PokeAPI.pokemonByURI(uri)) yield p;
+  
+  override def toString = s"$name; $pokemonURIs; " + super.toString;
 
 }
 

@@ -1,6 +1,7 @@
 package pokescala.model
 
 import java.time.LocalDateTime
+import pokescala.net.PokeAPI
 
 class Type(
     val name : String,
@@ -12,6 +13,8 @@ class Type(
   
   val registry = TypeRegistry;
   registry.register(this);
+  
+  def loadAdjacent = (for ((uri, mult) <- offensiveMults; t <- PokeAPI.typeByURI(uri)) yield t).toVector;
   
   override def toString = s"$name; $offensiveMults; " + super.toString;
 

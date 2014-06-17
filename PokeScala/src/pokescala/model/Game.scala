@@ -15,6 +15,8 @@ class Game(
   val registry = GameRegistry;
   registry.register(this);
   
+  def loadAdjacent = Vector();
+  
   override def toString = s"$name; $generation; $releaseYear; " + super.toString;
 }
 

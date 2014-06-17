@@ -13,6 +13,8 @@ class Ability(
   val registry = AbilityRegistry;
   registry.register(this);
   
+  def loadAdjacent = Vector();
+  
   override def toString = s"$name; $description; " + super.toString;
 
 }

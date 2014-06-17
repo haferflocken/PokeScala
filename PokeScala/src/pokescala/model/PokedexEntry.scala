@@ -1,12 +1,14 @@
 package pokescala.model
 
 import java.time.LocalDateTime
+import scala.collection.mutable
+import pokescala.net.PokeAPI
 
 class PokedexEntry(
     val name : String,
     val description : String,
-    val games : Vector[String],
-    val pokemon : String,
+    val gameURIs : Vector[String],
+    val pokemonURI : String,
     val id : Int,
     val resourceURI : String,
     val created : LocalDateTime,
@@ -15,7 +17,16 @@ class PokedexEntry(
   val registry = PokedexEntryRegistry;
   registry.register(this);
   
-  override def toString = s"$name; $description; $games; $pokemon; " + super.toString;
+  def loadAdjacent : Vector[Model[_]] = {
+    val buff = new mutable.ArrayBuffer[Model[_]];
+    for (uri <- gameURIs; game <- PokeAPI.gameByURI(uri)) 
+      buff += game;
+    for (pokemon <- PokeAPI.pokemonByURI(pokemonURI))
+      buff += pokemon;
+    return buff.toVector;
+  }
+  
+  override def toString = s"$name; $description; $gameURIs; $pokemonURI; " + super.toString;
 
 }
 

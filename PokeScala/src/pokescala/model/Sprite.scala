@@ -1,11 +1,12 @@
 package pokescala.model
 
 import java.time.LocalDateTime
+import pokescala.net.PokeAPI
 
 class Sprite(
     val name : String,
-    val pokemon : String,
-    val image : String,
+    val pokemonURI : String,
+    val imageURI : String,
     val id : Int,
     val resourceURI : String,
     val created : LocalDateTime,
@@ -14,7 +15,9 @@ class Sprite(
   val registry = SpriteRegistry;
   registry.register(this);
   
-  override def toString = s"$name; $pokemon; $image; " + super.toString;
+  def loadAdjacent = Vector(PokeAPI.pokemonByURI(pokemonURI).getOrElse(null));
+  
+  override def toString = s"$name; $pokemonURI; $imageURI; " + super.toString;
 
 }
 
