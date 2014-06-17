@@ -2,6 +2,7 @@ package pokescala.model
 
 import java.time.LocalDateTime
 import scala.collection.mutable
+import pokescala.net.PokeAPI
 
 class Pokemon(
     val name : String,
@@ -36,7 +37,24 @@ class Pokemon(
   def loadAdjacent : Vector[Model[_]] = {
     val buff = new mutable.ArrayBuffer[Model[_]];
     
-    // TODO
+    for (uri <- abilityURIs; a <- PokeAPI.abilityByURI(uri))
+      buff += a;
+    for (uri <- eggGroupURIs; e <- PokeAPI.eggGroupByURI(uri))
+      buff += e;
+    for (e <- evolutions; p <- PokeAPI.pokemonByURI(e.toURI))
+      buff += p;
+    for (uri <- pokedexEntryURIs; e <- PokeAPI.pokedexEntryByURI(uri))
+      buff += e;
+    for ((uri, level) <- levelUpMoveURIs; m <- PokeAPI.moveByURI(uri))
+      buff += m;
+    for (uri <- eggMoveURIs; m <- PokeAPI.moveByURI(uri))
+      buff += m;
+    for (uri <- machineMoveURIs; m <- PokeAPI.moveByURI(uri))
+      buff += m;
+    for (uri <- tutorMoveURIs; m <- PokeAPI.moveByURI(uri))
+      buff += m;
+    for (uri <- typeURIs; t <- PokeAPI.typeByURI(uri))
+      buff += t;
     
     return buff.toVector;
   };
@@ -47,8 +65,8 @@ class Pokemon(
 
 object Pokemon {
   
-  class Evolution(val method : Evolution.Method, val to : String) {
-    override def toString = s"$method -> $to";
+  class Evolution(val method : Evolution.Method, val toURI : String) {
+    override def toString = s"$method -> $toURI";
   }
   
   object Evolution {

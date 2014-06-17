@@ -2,40 +2,26 @@ package pokescala.test
 
 import pokescala.model._
 import pokescala.net.PokeAPI
+import scala.collection.mutable
 
 object GetTest extends App {
   
   val startTime = System.currentTimeMillis;
   
   // Loop through the pokemon in the pokedex, loading them.
-  for (pokedex <- PokeAPI.pokedex; uri <- pokedex.pokemonURIs; pokemon <- PokeAPI.pokemonByURI(uri)) {
-    // Loop through their abilities.
-    for (uri <- pokemon.abilityURIs)
-      PokeAPI.abilityByURI(uri);
-    
-    // Loop through their egg groups.
-    for (uri <- pokemon.eggGroupURIs)
-      PokeAPI.eggGroupByURI(uri);
-    
-    // Loop through their pokedex entries.
-    for (uri <- pokemon.pokedexEntryURIs)
-      PokeAPI.pokedexEntryByURI(uri);
-    
-    // Loop through their moves.
-    for ((uri, level) <- pokemon.levelUpMoveURIs)
-      PokeAPI.moveByURI(uri);
-    for (uri <- pokemon.eggMoveURIs)
-      PokeAPI.moveByURI(uri);
-    for (uri <- pokemon.machineMoveURIs)
-      PokeAPI.moveByURI(uri);
-    for (uri <- pokemon.tutorMoveURIs)
-      PokeAPI.moveByURI(uri);
-    
-    // Loop through their types.
-    for (uri <- pokemon.typeURIs)
-      PokeAPI.typeByURI(uri);
-    
-    println("Loaded " + pokemon.name);
+  for (pokedex <- PokeAPI.pokedex) {
+    val todo = new mutable.ArrayBuffer[Model[_]];
+    val visited = new mutable.ArrayBuffer[Model[_]];
+    todo += pokedex;
+    while (todo.nonEmpty) {
+      val x = todo.remove(todo.length - 1);
+      visited += x;
+      
+      println("Reached " + x.resourceURI);
+      
+      val adjacent = x.loadAdjacent;
+      todo ++= adjacent.filter(!visited.contains(_));
+    }
   }
   
   // Print out the registries.

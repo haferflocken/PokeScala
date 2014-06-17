@@ -13,14 +13,6 @@ abstract class Model[M <: Model[M]] {
   
   def loadAdjacent : Vector[Model[_]];
   
-  def loadReachable(visited : mutable.ArrayBuffer[Model[_]] = new mutable.ArrayBuffer) : Vector[Model[_]] = {
-    val adjacent = loadAdjacent;
-    for (a <- adjacent if !visited.contains(a)) {
-      a.loadReachable(visited);
-    }
-    return visited.toVector;
-  };
-  
   override def hashCode = id.hashCode;
   
   override def equals(other : Any) = hashCode == other.hashCode;
